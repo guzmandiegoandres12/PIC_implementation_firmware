@@ -31,9 +31,12 @@
 #ifndef XC_HEADER_TEMPLATE_H
 #define	XC_HEADER_TEMPLATE_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#pragma config PLLDIV = 1       // PLL Prescaler Selection bits (No prescale (4 MHz oscillator input drives PLL directly))
+#pragma config CPUDIV = OSC1_PLL2// System Clock Postscaler Selection bits ([Primary Oscillator Src: /1][96 MHz PLL Src: /2])
+#pragma config USBDIV = 1       // USB Clock Selection bit (used in Full-Speed USB mode only; UCFG:FSEN = 1) (USB clock source comes directly from the primary oscillator block with no postscale)
 
-#pragma config FOSC = HSPLL_HS  // Oscillator Selection bits (HS oscillator, PLL enabled (HSPLL))
+// CONFIG1H
+#pragma config FOSC = HS        // Oscillator Selection bits (HS oscillator (HS))
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enable bit (Fail-Safe Clock Monitor disabled)
 #pragma config IESO = OFF       // Internal/External Oscillator Switchover bit (Oscillator Switchover mode disabled)
 
@@ -88,6 +91,10 @@
 
 // CONFIG7H
 #pragma config EBTRB = OFF      // Boot Block Table Read Protection bit (Boot block (000000-0007FFh) is not protected from table reads executed in other blocks)
+
+// #pragma config statements should precede project file includes.
+// Use project enums instead of #define for ON and OFF.
+#include <xc.h> // include processor files - each processor file is guarded.  
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
